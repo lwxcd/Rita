@@ -9,12 +9,14 @@ buildscript {
 
         retrofitVersion = '2.7.1'
         okhttpVersion = '4.3.1'
+
+        exposedVersion = '0.20.1'
     }
 
     repositories {
         //maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
-        jcenter()
-        //maven { url "https://maven.aliyun.com/repository/jcenter" }
+        //jcenter()
+        maven { url "https://maven.aliyun.com/repository/jcenter" }
     }
 
     dependencies {
@@ -34,10 +36,10 @@ group 'net.logiase'
 version '0.0.1'
 
 repositories {
-    mavenCentral()
-    //maven { url "https://maven.aliyun.com/repository/central" }
-    jcenter()
-    //maven { url "https://maven.aliyun.com/repository/jcenter" }
+    //mavenCentral()
+    maven { url "https://maven.aliyun.com/repository/central" }
+    //jcenter()
+    maven { url "https://maven.aliyun.com/repository/jcenter" }
 }
 
 dependencies {
@@ -50,6 +52,12 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+
+    // 数据库ORM
+    implementation group: "org.jetbrains.exposed", name: "exposed-core", version: exposedVersion
+    implementation group: "org.jetbrains.exposed", name: "exposed-dao", version: exposedVersion
+    implementation group: "org.jetbrains.exposed", name: "exposed-jdbc", version: exposedVersion
+    implementation "mysql:mysql-connector-java:5.1.46"
 }
 
 
