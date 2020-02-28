@@ -1,16 +1,13 @@
 package net.logiase.rita.service.pixivc
 
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-/**
- * Pixivc Api 接口
- */
 interface PixivcApiService {
 
-    /**
-     * suspend 搜索画作
-     */
     @GET("illustrations")
     suspend fun search(
         @Query("keyword") keyword: String,

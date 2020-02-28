@@ -33,17 +33,15 @@ suspend fun main() {
     bot.join()
 }
 
-
-/**
- * 扩展函数 基础功能实现
- */
 fun Bot.baseConfFunction() {
+
+    // 另开线程防止堵塞
+    // GlobalScope / suspend
 
     this.subscribeAlways<MemberJoinEvent> {
         this.group.sendMessage("欢迎新大佬入群")
     }
 
-    // 屏蔽相关
     this.subscribeMessages {
         case("屏蔽列表") {
             reply(Conf.conf.blockAccounts.toString())
