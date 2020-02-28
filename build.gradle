@@ -1,0 +1,61 @@
+buildscript {
+    ext {
+        kotlinVersion = '1.3.61'
+
+        coroutinesVersion = '1.3.3'
+        serializationVersion = '0.14.0'
+
+        miraiVersion = '0.22.0'
+
+        retrofitVersion = '2.7.1'
+        okhttpVersion = '4.3.1'
+    }
+
+    repositories {
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
+        maven { url "https://maven.aliyun.com/repository/jcenter" }
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion"
+        classpath "com.github.jengelman.gradle.plugins:shadow:5.2.0"
+    }
+}
+
+apply plugin: "kotlin"
+apply plugin: "kotlinx-serialization"
+apply plugin: "application"
+apply plugin: "com.github.johnrengelman.shadow"
+
+group 'net.logiase'
+version '0.0.1'
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serializationVersion"
+
+    implementation "net.mamoe:mirai-core-qqandroid-jvm:$miraiVersion"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+}
+
+
+mainClassName = "net.logiase.rita.RitaKt"
+
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
