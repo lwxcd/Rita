@@ -2,7 +2,7 @@
 
 基于[mirai](https://github.com/mamoe/mirai)开发的QQ机器人
 
-服务于某某某群
+服务于某某某群,如有更改请~~写好注释~~
 
 如遇到网络问题，请将build.gradle中repositories代码块中注释删除以使用阿里云镜像
     
