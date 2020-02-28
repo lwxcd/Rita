@@ -6,9 +6,7 @@ import net.mamoe.mirai.Bot
 import net.mamoe.mirai.contact.Contact
 import net.mamoe.mirai.contact.sendMessage
 import net.mamoe.mirai.event.subscribeGroupMessages
-import net.mamoe.mirai.message.data.sendTo
 import net.mamoe.mirai.message.sendAsImageTo
-import net.mamoe.mirai.message.uploadAsImage
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,13 +16,13 @@ import java.net.URL
 object Pixivc {
 
     // Api服务
-    private val service: PixivcApiService by lazy {
+    private val SERVICE: PixivicApiService by lazy {
         Retrofit.Builder()
             .client(OkHttpClient.Builder().build())
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl("https://api.pixivic.com/")
             .build()
-            .create(PixivcApiService::class.java)
+            .create(PixivicApiService::class.java)
     }
 
     /**
@@ -37,7 +35,7 @@ object Pixivc {
 
             // IO线程
             withContext(Dispatchers.IO) {
-                val response = service.search(keyword = keyword)
+                val response = SERVICE.search(keyword = keyword)
                 if (response.data.isNullOrEmpty()) {
                     contact.sendMessage("无结果")
                     return@withContext
@@ -61,10 +59,10 @@ object Pixivc {
 /**
  * 扩展函数，实现pixivc功能
  */
-suspend fun Bot.pixivc() {
+suspend fun Bot.pixivic() {
     this.subscribeGroupMessages {
         //以pixivc开头
-        startsWith("pixivc", removePrefix = true) {
+        startsWith("pixivic", removePrefix = true) {
             // 启动新线程
             GlobalScope.launch {
                 if (Conf.checkPermission(sender.id) != -1) {

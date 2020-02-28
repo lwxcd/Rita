@@ -6,7 +6,7 @@ import retrofit2.http.Query
 /**
  * Pixivc Api 接口
  */
-interface PixivcApiService {
+interface PixivicApiService {
 
     /**
      * suspend 搜索画作

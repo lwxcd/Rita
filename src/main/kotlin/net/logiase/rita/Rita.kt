@@ -1,7 +1,7 @@
 package net.logiase.rita
 
 import net.logiase.rita.conf.Conf
-import net.logiase.rita.service.pixivc.pixivc
+import net.logiase.rita.service.pixivc.pixivic
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.alsoLogin
 import net.mamoe.mirai.contact.sendMessage
@@ -28,7 +28,7 @@ suspend fun main() {
     bot.baseConfFunction()
 
     //Parrot.parrot(bot)
-    bot.pixivc()
+    bot.pixivic()
 
     bot.join()
 }
