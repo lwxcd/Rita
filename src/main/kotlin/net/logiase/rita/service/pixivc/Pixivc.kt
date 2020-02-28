@@ -27,10 +27,16 @@ object Pixivc {
             .create(PixivcApiService::class.java)
     }
 
+    /**
+     * 搜索画作
+     * @param keyword 关键字
+     * @param contact 来源 QQ
+     */
     suspend fun searchIllust(keyword: String, contact: Contact) {
         withTimeoutOrNull(10 * 1000) {
+
+            // IO线程
             withContext(Dispatchers.IO) {
-                contact.bot.logger.info("start service")
                 val response = service.search(keyword = keyword)
                 if (response.data.isNullOrEmpty()) {
                     contact.sendMessage("无结果")
@@ -38,7 +44,6 @@ object Pixivc {
                 }
                 try {
                     for (url in response.data.random().imageUrls) {
-                        contact.bot.logger.info("start upload")
                         URL(url.original.replace("pximg.net", "pixiv.cat"))
                             .sendAsImageTo(contact)
                             .recallIn(60 * 1000)
@@ -53,13 +58,18 @@ object Pixivc {
 
 }
 
+/**
+ * 扩展函数，实现pixivc功能
+ */
 suspend fun Bot.pixivc() {
     this.subscribeGroupMessages {
-        startsWith("pixivc ", removePrefix = true) {
+        //以pixivc开头
+        startsWith("pixivc", removePrefix = true) {
+            // 启动新线程
             GlobalScope.launch {
                 if (Conf.checkPermission(sender.id) != -1) {
-                    bot.logger.info("into pixivc")
-                    Pixivc.searchIllust(it, group)
+                    // suspend 挂起
+                    Pixivc.searchIllust(it.removePrefix(" "), group)
                 }
             }
         }
