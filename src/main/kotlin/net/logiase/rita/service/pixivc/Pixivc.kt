@@ -10,7 +10,6 @@ import net.mamoe.mirai.message.sendAsImageTo
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Exception
 import java.net.URL
 
 object Pixivc {
@@ -30,9 +29,9 @@ object Pixivc {
      * @param keyword 关键字
      * @param contact 来源 QQ
      */
-    suspend fun searchIllust(keyword: String, contact: Contact) {
+    suspend fun searchIllust(keyword: String, contact: Contact) =
         withTimeoutOrNull(10 * 1000) {
-
+            //contact.bot.logger.info("into pixivic")
             // IO线程
             withContext(Dispatchers.IO) {
                 val response = SERVICE.search(keyword = keyword)
@@ -41,6 +40,7 @@ object Pixivc {
                     return@withContext
                 }
                 try {
+                    //contact.bot.logger.info("start upload")
                     for (url in response.data.random().imageUrls) {
                         URL(url.original.replace("pximg.net", "pixiv.cat"))
                             .sendAsImageTo(contact)
@@ -49,10 +49,9 @@ object Pixivc {
                 } catch (e: Exception) {
                     contact.bot.logger.info(e)
                 }
+                //contact.bot.logger.info("finish pixivic")
             }
         }
-
-    }
 
 }
 
@@ -60,16 +59,19 @@ object Pixivc {
  * 扩展函数，实现pixivc功能
  */
 suspend fun Bot.pixivic() {
+
     this.subscribeGroupMessages {
-        //以pixivc开头
+
         startsWith("pixivic", removePrefix = true) {
-            // 启动新线程
-            GlobalScope.launch {
-                if (Conf.checkPermission(sender.id) != -1) {
-                    // suspend 挂起
+            bot.logger.info("start pixivic")
+            if (Conf.checkPermission(sender.id) != -1) {
+                GlobalScope.launch {
                     Pixivc.searchIllust(it.removePrefix(" "), group)
                 }
             }
+
         }
+
     }
+
 }
