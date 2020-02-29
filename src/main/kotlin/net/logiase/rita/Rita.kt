@@ -1,6 +1,7 @@
 package net.logiase.rita
 
 import net.logiase.rita.conf.Conf
+import net.logiase.rita.service.bg.randomBg
 import net.logiase.rita.service.pixivc.pixivic
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.alsoLogin
@@ -8,7 +9,7 @@ import net.mamoe.mirai.contact.sendMessage
 import net.mamoe.mirai.event.events.MemberJoinEvent
 import net.mamoe.mirai.event.subscribeAlways
 import net.mamoe.mirai.event.subscribeMessages
-import net.mamoe.mirai.message.data.*
+import net.mamoe.mirai.message.data.At
 import net.mamoe.mirai.qqandroid.Bot
 import net.mamoe.mirai.qqandroid.QQAndroid
 import net.mamoe.mirai.utils.FileBasedDeviceInfo
@@ -29,6 +30,7 @@ suspend fun main() {
 
     //Parrot.parrot(bot)
     bot.pixivic()
+    bot.randomBg()
 
     bot.join()
 }
