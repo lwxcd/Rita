@@ -19,7 +19,7 @@ object Pixivc {
         Retrofit.Builder()
             .client(OkHttpClient.Builder().build())
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://api.pixivic.com/illustrations")
+            .baseUrl("https://api.pixivic.com/")
             .build()
             .create(PixivicApiService::class.java)
     }
