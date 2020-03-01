@@ -2,7 +2,9 @@ package net.logiase.rita
 
 import net.logiase.rita.conf.Conf
 import net.logiase.rita.service.bg.randomBg
+import net.logiase.rita.service.setu.randomSetu
 import net.logiase.rita.service.pixivc.pixivic
+
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.alsoLogin
 import net.mamoe.mirai.contact.sendMessage
@@ -31,7 +33,7 @@ suspend fun main() {
     //Parrot.parrot(bot)
     bot.pixivic()
     bot.randomBg()
-
+    bot.randomSetu()
     bot.join()
 }
 
